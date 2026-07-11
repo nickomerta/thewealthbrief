@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════
+  PAYHIP SETUP — REQUIRED BEFORE THIS SITE CAN TAKE PAYMENT
+  ═══════════════════════════════════════════════════════════════
+  This site is wired for Payhip's embedded buy-button checkout.
+  Find/replace these placeholder keys with your real Payhip
+  product keys (Payhip dashboard → Products → Share/Embed →
+  the code after "payhip.com/b/" is your product key):
+
+    COLLECTION-KEY        → your Complete Collection bundle
+    NOTION-KEY             → your Notion template product
+    MASTERING-CREDIT-KEY   → Mastering Credit eBook
+    DISPUTE-TOOLKIT-KEY    → Credit Dispute Toolkit workbook
+    BUDGET-GOALS-KEY       → Budget & Goals planner
+    COMMAND-CENTER-KEY     → Command Center dashboard template ✓ DONE (7Mbc5)
+    READING-REPORT-KEY     → Reading Your Credit Report eBook
+    DEBT-PAYOFF-KEY        → Wealth Tracker eBook ✓ DONE (MtS9H)
+    SAVING-AUTOPILOT-KEY   → Saving on Autopilot eBook
+    INVESTING-101-KEY      → Investing 101 eBook
+
+  Each key appears in TWO places on its button: the href URL
+  AND the data-product attribute — both must match your real key.
+  Search this file for "REPLACE" to find every spot (10 total).
+  ═══════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wealth Brief — The Financial Knowledge You Were Never Taught</title>
+<meta name="description" content="Premium credit and money-management education. eBooks, workbooks, planners, and Notion templates built for the way you actually learn.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Wealth Brief — The Financial Knowledge You Were Never Taught">
+<meta property="og:description" content="Credit eBooks, workbooks, planners, and Notion templates built for the way you actually learn.">
+<meta property="og:image" content="https://www.thewealthbrief.com/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.thewealthbrief.com/assets/og-image.png">
+<meta name="theme-color" content="#0B1320">
+<!-- REPLACE with your live domain once deployed — this affects the canonical link below AND the og:image/twitter:image URLs above, which must be absolute (not relative) to work when links are shared -->
+<link rel="canonical" href="https://www.thewealthbrief.com/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "The Wealth Brief",
+  "description": "Premium credit and money-management education through eBooks, workbooks, planners, and Notion templates.",
+  "url": "https://www.thewealthbrief.com/"
+}
+</script>
+<!-- Gold arc-gauge favicon, matches brand mark -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='30' fill='%230B1320'/%3E%3Ccircle cx='30' cy='30' r='20' fill='none' stroke='%23D4AF37' stroke-width='4' stroke-dasharray='94 126' stroke-linecap='round' transform='rotate(-90 30 30)'/%3E%3C/svg%3E">
+<!--
+  ANALYTICS — not yet connected, and now gated behind cookie consent (see
+  the consent-handling script near the closing </body> tag). Sign up for
+  Google Analytics 4 (analytics.google.com), get your Measurement ID
+  (starts with "G-"), and replace G-XXXXXXXXXX in the loadAnalytics()
+  function below. Until you do this, no visitor data is tracked either way.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- PAYHIP CHECKOUT — required for all .payhip-buy-button links below to open checkout -->
+<script type="text/javascript" src="https://payhip.com/payhip.js"></script>
+<style>
+:root{
+  --ink:#0B1320;
+  --slate:#1F2937;
+  --gold:#D4AF37;
+  --ivory:#F8F6F2;
+  --cocoa:#8B5E3C;
+  --ink-soft: rgba(248,246,242,0.62);
+  --ink-faint: rgba(248,246,242,0.34);
+  --line: rgba(212,175,55,0.22);
+  --heading: 'Sora', sans-serif;
+  --sans: 'Inter', sans-serif;
+  --numbers: 'Space Grotesk', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--ivory);
+  font-family:var(--sans);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+a{color:inherit; text-decoration:none;}
+img{max-width:100%; display:block;}
+
+/* ===== ACCESSIBILITY: focus states + skip link ===== */
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible, input:focus-visible{
+  outline:2px solid var(--gold); outline-offset:3px; border-radius:2px;
+}
+.skip-link{
+  position:absolute; top:-60px; left:16px; z-index:1000; background:var(--gold); color:var(--ink);
+  padding:12px 20px; font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:0.04em; border-radius:2px;
+  transition:top 0.25s ease;
+}
+.skip-link:focus{top:16px;}
+
+/* ===== MOBILE NAV TOGGLE ===== */
+.nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;}
+.nav-toggle span{width:22px; height:1.5px; background:var(--ivory);}
+.mobile-nav{
+  position:fixed; top:0; right:0; height:100vh; width:280px; background:var(--slate); z-index:450;
+  padding:100px 32px 40px; transform:translateX(100%); transition:transform 0.4s cubic-bezier(.16,.84,.44,1);
+  display:flex; flex-direction:column; gap:28px; box-shadow:-20px 0 60px rgba(0,0,0,0.4);
+}
+.mobile-nav.open{transform:translateX(0);}
+.mobile-nav a{font-size:16px; color:var(--ivory);}
+.mobile-nav a:hover{color:var(--gold);}
+#mobile-nav-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:440; opacity:0; pointer-events:none; transition:opacity 0.4s ease;}
+#mobile-nav-overlay.show{opacity:1; pointer-events:auto;}
+@media(max-width:860px){.nav-toggle{display:flex;}}
+.wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+.eyebrow{
+  font-family:var(--sans); font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--gold); display:inline-flex; align-items:center; gap:10px; margin-bottom:22px;
+}
+.eyebrow::before{content:''; width:22px; height:1px; background:var(--gold);}
+h1,h2,h3{font-family:var(--heading); font-weight:700; line-height:1.05; letter-spacing:-0.01em;}
+.reveal{opacity:0; transform:translateY(28px); transition:opacity 0.9s cubic-bezier(.16,.84,.44,1), transform 0.9s cubic-bezier(.16,.84,.44,1);}
+.reveal.in{opacity:1; transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.22s;}
+.reveal-delay-3{transition-delay:0.34s;}
+
+/* ===== ARC PROGRESS — signature element ===== */
+#arc-fixed{
+  position:fixed; top:24px; right:28px; width:64px; height:64px; z-index:500;
+  pointer-events:none;
+}
+#arc-fixed svg{width:100%; height:100%; transform:rotate(-90deg);}
+#arc-fixed circle{fill:none; stroke-width:2.5;}
+#arc-track{stroke:rgba(248,246,242,0.12);}
+#arc-fill{stroke:var(--gold); stroke-dasharray:163; stroke-dashoffset:163; stroke-linecap:round; transition:stroke-dashoffset 0.1s linear;}
+#arc-label{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--numbers); font-size:10px; color:var(--gold); letter-spacing:0.05em;
+}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed; top:0; left:0; right:0; z-index:400;
+  padding:22px 32px; display:flex; align-items:center; justify-content:space-between;
+  backdrop-filter:blur(14px); background:rgba(11,19,32,0.55);
+  border-bottom:1px solid transparent; transition:border-color 0.4s ease;
+}
+nav.scrolled{border-bottom-color:var(--line);}
+.logo{font-family:var(--heading); font-size:19px; letter-spacing:0.02em;}
+.nav-links{display:flex; gap:36px; font-size:13px; letter-spacing:0.02em; color:var(--ink-soft);}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{
+  font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:0.08em; padding:10px 20px;
+  border:1px solid var(--gold); color:var(--gold); border-radius:2px; transition:all 0.3s ease;
+}
+.nav-cta:hover{background:var(--gold); color:var(--ink);}
+@media(max-width:860px){.nav-links{display:none;}}
+
+/* ===== STICKY BUY BAR ===== */
+#sticky-buy{
+  position:fixed; bottom:24px; left:50%; transform:translate(-50%,140%);
+  z-index:400; background:var(--ivory); color:var(--ink); border-radius:100px;
+  padding:14px 10px 14px 24px; display:flex; align-items:center; gap:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.45); transition:transform 0.5s cubic-bezier(.16,.84,.44,1);
+}
+#sticky-buy.show{transform:translate(-50%,0);}
+#sticky-buy span{font-family:var(--sans); font-size:12px; letter-spacing:0.04em;}
+#sticky-buy button{
+  font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:0.06em; background:var(--ink); color:var(--ivory);
+  border:none; padding:12px 22px; border-radius:100px; cursor:pointer;
+}
+
+/* ===== SCENE 1 — HERO ===== */
+.hero{
+  min-height:100vh; position:relative; display:flex; flex-direction:column; justify-content:center;
+  padding:140px 0 100px; overflow:hidden;
+}
+.hero::before{
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 900px 500px at 78% 18%, rgba(212,175,55,0.14), transparent 60%),
+    radial-gradient(ellipse 700px 700px at 10% 90%, rgba(139,94,60,0.14), transparent 60%);
+  z-index:0;
+}
+.hero-arc{
+  position:absolute; right:-120px; top:50%; transform:translateY(-50%); width:640px; height:640px; opacity:0.55;
+  z-index:0;
+}
+#hero-particles{position:absolute; inset:0; z-index:0;}
+.particle{position:absolute; width:3px; height:3px; border-radius:50%; background:var(--gold); opacity:0.5;}
+.hero-inner{position:relative; z-index:2;}
+.hero h1{font-size:clamp(42px,6.6vw,92px); max-width:920px;}
+.hero h1 em{font-style:italic; color:var(--gold);}
+.hero p.lead{
+  font-size:19px; color:var(--ink-soft); max-width:520px; margin-top:28px; line-height:1.6;
+}
+.hero-ctas{display:flex; gap:16px; margin-top:44px; flex-wrap:wrap;}
+.btn-primary{
+  font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:0.06em; background:var(--gold); color:var(--ink);
+  padding:17px 32px; border-radius:2px; display:inline-flex; align-items:center; gap:10px; transition:transform 0.3s ease;
+}
+.btn-primary:hover{transform:translateY(-2px);}
+.btn-ghost{
+  font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:0.06em; border:1px solid var(--ink-faint); color:var(--ivory);
+  padding:17px 32px; border-radius:2px; transition:border-color 0.3s ease;
+}
+.btn-ghost:hover{border-color:var(--gold);}
+.scroll-cue{
+  position:absolute; bottom:40px; left:32px; display:flex; align-items:center; gap:12px;
+  font-family:var(--sans); font-size:11px; letter-spacing:0.12em; color:var(--ink-faint); z-index:2;
+}
+.scroll-cue .line{width:1px; height:34px; background:linear-gradient(var(--gold), transparent); animation:scrolldown 2s infinite;}
+@keyframes scrolldown{0%{opacity:0.2;} 50%{opacity:1;} 100%{opacity:0.2;}}
+
+/* ===== GENERIC SECTION ===== */
+section{position:relative; padding:130px 0;}
+.section-ivory{background:var(--ivory); color:var(--ink);}
+.section-ivory .eyebrow{color:var(--cocoa);}
+.section-slate{background:var(--slate);}
+.divider{
+  width:100%; height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent); opacity:0.35;
+}
+h2.section-title{font-size:clamp(30px,4vw,52px); max-width:680px;}
+
+/* ===== SCENE 2 — PROBLEM ===== */
+.stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); margin-top:70px; border:1px solid var(--line);}
+.stat-cell{background:var(--ink); padding:44px 34px;}
+.stat-num{font-family:var(--numbers); font-weight:600; font-size:56px; color:var(--gold);}
+.stat-desc{font-size:14px; color:var(--ink-soft); margin-top:12px; line-height:1.5;}
+@media(max-width:760px){.stat-grid{grid-template-columns:1fr;}}
+
+/* ===== SCENE 3 — SOLUTION (books) ===== */
+.book-row{display:grid; grid-template-columns:repeat(4,1fr); gap:28px; margin-top:70px;}
+.book-card{perspective:1000px;}
+.book-face{
+  aspect-ratio:3/4.2; background:linear-gradient(155deg, var(--slate), var(--ink)) center/cover; border:1px solid var(--line);
+  border-radius:3px; padding:22px; position:relative; overflow:hidden;
+  transition:transform 0.6s cubic-bezier(.16,.84,.44,1), border-color 0.4s ease;
+  transform-style:preserve-3d;
+}
+.book-card:hover .book-face{transform:rotateY(-14deg) rotateX(4deg) translateZ(10px); border-color:var(--gold);}
+.book-scrim{position:absolute; inset:0; background:linear-gradient(to top, rgba(11,19,32,0.96), rgba(11,19,32,0) 42%); z-index:1;}
+.book-actions{position:absolute; left:22px; right:22px; bottom:20px; z-index:2;}
+.book-label{font-family:var(--sans); font-size:10px; letter-spacing:0.14em; color:var(--gold);}
+.book-title{font-family:var(--heading); font-size:22px; margin-top:14px; line-height:1.2;}
+.book-arc{width:44px; height:44px; align-self:flex-end;}
+.book-buy{
+  font-family:var(--sans); font-weight:600; font-size:10px; letter-spacing:0.06em; color:var(--gold); border:1px solid var(--line);
+  padding:8px 12px; border-radius:2px; text-align:center; margin-top:14px; display:block; transition:all 0.3s ease;
+}
+.book-buy:hover{background:var(--gold); color:var(--ink); border-color:var(--gold);}
+.book-preview-link{
+  font-family:var(--sans); font-size:9px; letter-spacing:0.06em; color:var(--ink-faint); background:none; border:none;
+  cursor:pointer; margin-top:8px; text-align:center; width:100%; text-decoration:underline; text-underline-offset:3px;
+}
+.book-preview-link:hover{color:var(--ivory);}
+@media(max-width:900px){.book-row{grid-template-columns:repeat(2,1fr);}}
+
+/* ===== PREVIEW MODAL ===== */
+#preview-overlay{
+  position:fixed; inset:0; background:rgba(11,19,32,0.82); backdrop-filter:blur(6px); z-index:920;
+  display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; pointer-events:none; transition:opacity 0.4s ease;
+}
+#preview-overlay.show{opacity:1; pointer-events:auto;}
+.preview-modal{
+  background:var(--slate); border:1px solid var(--line); max-width:480px; width:100%; padding:40px;
+  border-radius:4px; position:relative; transform:translateY(20px); transition:transform 0.4s cubic-bezier(.16,.84,.44,1);
+}
+#preview-overlay.show .preview-modal{transform:translateY(0);}
+.preview-close{position:absolute; top:16px; right:20px; font-family:var(--sans); font-weight:600; font-size:13px; color:var(--ink-faint); cursor:pointer; background:none; border:none;}
+.preview-close:hover{color:var(--ivory);}
+.preview-modal h3{font-family:var(--heading); font-size:24px;}
+.preview-modal .eyebrow{margin-bottom:14px;}
+.preview-placeholder{
+  border:1px dashed var(--line); border-radius:4px; padding:30px 20px; margin-top:22px; text-align:center;
+  font-family:var(--sans); font-size:11px; color:var(--ink-faint); line-height:1.7;
+}
+
+/* ===== SCENE 4 — TRUST ===== */
+.trust-row{display:grid; grid-template-columns:repeat(4,1fr); gap:40px; margin-top:64px; text-align:center;}
+.trust-num{font-family:var(--numbers); font-weight:600; font-size:44px; color:var(--ink);}
+.trust-label{font-family:var(--sans); font-size:11px; letter-spacing:0.08em; color:var(--cocoa); margin-top:8px; text-transform:uppercase;}
+@media(max-width:760px){.trust-row{grid-template-columns:repeat(2,1fr); row-gap:36px;}}
+
+/* ===== SCENE 5 — WHAT'S INSIDE (accordion cards) ===== */
+.feature-list{margin-top:60px; border-top:1px solid var(--line);}
+.feature-item{border-bottom:1px solid var(--line); padding:30px 0; cursor:pointer;}
+.feature-head{display:flex; justify-content:space-between; align-items:center; gap:20px;}
+.feature-head h3{font-size:23px; font-weight:400;}
+.feature-num{font-family:var(--numbers); font-weight:600; font-size:12px; color:var(--gold);}
+.feature-body{max-height:0; overflow:hidden; transition:max-height 0.5s ease;}
+.feature-item.open .feature-body{max-height:120px;}
+.feature-body p{padding-top:16px; color:var(--ink-soft); font-size:15px; max-width:640px; line-height:1.6;}
+.feature-plus{font-family:var(--sans); font-size:20px; color:var(--gold); transition:transform 0.4s ease;}
+.feature-item.open .feature-plus{transform:rotate(45deg);}
+
+/* ===== SCENE 6 — JOURNEY TIMELINE ===== */
+.timeline{position:relative; margin-top:80px; padding-left:2px;}
+.timeline::before{content:''; position:absolute; left:11px; top:6px; bottom:6px; width:1px; background:var(--line);}
+.tl-item{position:relative; padding-left:52px; padding-bottom:56px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot{position:absolute; left:0; top:2px; width:24px; height:24px; border-radius:50%; border:1px solid var(--gold); background:var(--ink); display:flex; align-items:center; justify-content:center;}
+.tl-dot::after{content:''; width:6px; height:6px; border-radius:50%; background:var(--gold);}
+.tl-stage{font-family:var(--sans); font-size:11px; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase;}
+.tl-item h3{font-size:24px; margin-top:8px;}
+.tl-item p{color:var(--ink-soft); margin-top:8px; max-width:520px; font-size:15px; line-height:1.6;}
+
+/* ===== SCENE 7 — RESULTS ===== */
+.results-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-top:70px; align-items:center;}
+.goal-list{display:flex; flex-direction:column; gap:20px;}
+.goal-row{display:flex; align-items:flex-start; gap:14px; font-size:15px; color:var(--ink-soft); line-height:1.5;}
+.goal-check{color:var(--gold); font-family:var(--sans); font-size:14px; flex-shrink:0; margin-top:2px;}
+.result-bars{display:flex; flex-direction:column; gap:26px;}
+.bar-row .bar-label{display:flex; justify-content:space-between; font-family:var(--sans); font-size:12px; margin-bottom:8px; color:var(--ink-soft);}
+.bar-track{height:6px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;}
+.bar-fill{height:100%; background:linear-gradient(90deg, var(--cocoa), var(--gold)); width:0%; border-radius:4px; transition:width 1.4s cubic-bezier(.16,.84,.44,1);}
+@media(max-width:860px){.results-grid{grid-template-columns:1fr;}}
+
+/* ===== SCENE 8 — SHOWCASE SHELF ===== */
+.shelf{margin-top:70px; display:grid; grid-template-columns:repeat(4,1fr); gap:24px; position:relative;}
+.shelf::after{content:''; position:absolute; left:0; right:0; bottom:-18px; height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent); opacity:0.4;}
+.shelf-item{aspect-ratio:3/4; background:linear-gradient(160deg, var(--ink), var(--slate)); border:1px solid var(--line); border-radius:3px; position:relative; overflow:hidden; transition:transform 0.5s ease;}
+.shelf-item:hover{transform:translateY(-10px);}
+.shelf-item::before{content:''; position:absolute; bottom:0; left:0; right:0; height:40%; background:linear-gradient(to top, rgba(212,175,55,0.12), transparent);}
+.shelf-tag{position:absolute; bottom:16px; left:16px; font-family:var(--sans); font-size:10px; letter-spacing:0.08em; color:var(--gold);}
+@media(max-width:900px){.shelf{grid-template-columns:repeat(2,1fr);}}
+
+/* ===== SCENE 9 — PRICING ===== */
+.price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:70px; border:1px solid var(--line);}
+.price-card{padding:44px 34px; border-right:1px solid var(--line); position:relative;}
+.price-card:last-child{border-right:none;}
+.price-card.featured{background:rgba(212,175,55,0.06);}
+.price-badge{position:absolute; top:-13px; left:34px; background:var(--gold); color:var(--ink); font-family:var(--sans); font-size:10px; letter-spacing:0.08em; padding:5px 12px; border-radius:2px;}
+.price-tier{font-family:var(--sans); font-size:11px; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase;}
+.price-amt{font-family:var(--numbers); font-weight:600; font-size:44px; margin-top:14px;}
+.price-amt span{font-size:16px; color:var(--ink-faint);}
+.price-list{margin-top:26px; list-style:none; display:flex; flex-direction:column; gap:12px;}
+.price-list li{font-size:14px; color:var(--ink-soft); padding-left:18px; position:relative;}
+.price-list li::before{content:'—'; position:absolute; left:0; color:var(--gold);}
+.price-card .btn-ghost, .price-card .btn-primary{width:100%; justify-content:center; margin-top:30px; text-align:center;}
+@media(max-width:900px){.price-grid{grid-template-columns:1fr;} .price-card{border-right:none; border-bottom:1px solid var(--line);}}
+
+/* ===== SCENE 10 — COMMUNITY ===== */
+.testi-row{display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:70px;}
+.testi-card{border:1px solid var(--line); padding:32px; border-radius:3px; background:rgba(255,255,255,0.02);}
+.testi-stars{color:var(--gold); font-size:13px; letter-spacing:2px;}
+.testi-quote{font-family:var(--heading); font-size:18px; margin-top:18px; line-height:1.5;}
+.testi-name{font-family:var(--sans); font-size:11px; color:var(--ink-faint); margin-top:22px; letter-spacing:0.05em;}
+@media(max-width:900px){.testi-row{grid-template-columns:1fr;}}
+
+/* ===== SCENE 11 — FAQ ===== */
+.faq-item{border-bottom:1px solid var(--line);}
+.faq-q{padding:26px 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-size:17px; border-radius:2px;}
+.faq-a{max-height:0; overflow:hidden; transition:max-height 0.45s ease;}
+.faq-item.open .faq-a{max-height:160px;}
+.faq-a p{padding-bottom:24px; color:var(--ink-soft); font-size:15px; max-width:600px; line-height:1.6;}
+.faq-plus{font-family:var(--sans); color:var(--gold); transition:transform 0.4s ease; flex-shrink:0; margin-left:20px;}
+.faq-item.open .faq-plus{transform:rotate(45deg);}
+
+/* ===== SCENE 12 — FINAL OFFER ===== */
+.offer{
+  min-height:88vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  position:relative; overflow:hidden;
+}
+.offer::before{content:''; position:absolute; inset:0; background:radial-gradient(ellipse 800px 500px at 50% 30%, rgba(212,175,55,0.12), transparent 65%);}
+.offer h2{font-size:clamp(34px,5.4vw,68px); max-width:780px; margin:0 auto;}
+.offer p{color:var(--ink-soft); max-width:480px; margin:26px auto 0; font-size:17px; line-height:1.6;}
+.value-row{display:flex; gap:36px; margin-top:44px; flex-wrap:wrap; justify-content:center;}
+.value-cell{display:flex; align-items:center; gap:12px; text-align:left;}
+.value-icon{font-size:22px; color:var(--gold);}
+.value-text{font-family:var(--sans); font-size:11px; letter-spacing:0.03em; color:var(--ink-soft); line-height:1.5;}
+.guarantee{margin-top:50px; display:flex; align-items:center; gap:14px; font-family:var(--sans); font-size:12px; color:var(--ink-soft); letter-spacing:0.03em;}
+
+/* ===== LEAD MAGNET POPUP ===== */
+#lead-overlay{
+  position:fixed; inset:0; background:rgba(11,19,32,0.78); backdrop-filter:blur(6px);
+  z-index:900; display:flex; align-items:center; justify-content:center; padding:24px;
+  opacity:0; pointer-events:none; transition:opacity 0.45s ease;
+}
+#lead-overlay.show{opacity:1; pointer-events:auto;}
+.lead-modal{
+  background:var(--ivory); color:var(--ink); max-width:440px; width:100%; padding:48px 40px;
+  border-radius:4px; position:relative; text-align:center;
+  transform:translateY(24px) scale(0.97); transition:transform 0.45s cubic-bezier(.16,.84,.44,1);
+}
+#lead-overlay.show .lead-modal{transform:translateY(0) scale(1);}
+.lead-close{position:absolute; top:16px; right:20px; font-family:var(--sans); font-weight:600; font-size:13px; color:var(--ink-faint); cursor:pointer; background:none; border:none;}
+.lead-close:hover{color:var(--ink);}
+.lead-modal .eyebrow{color:var(--cocoa); justify-content:center;}
+.lead-modal h3{font-size:28px; margin-top:6px;}
+.lead-modal p{color:#555; font-size:14px; margin-top:14px; line-height:1.6;}
+.lead-form{display:flex; flex-direction:column; gap:12px; margin-top:26px;}
+.lead-form input{
+  padding:14px 16px; border:1px solid rgba(11,19,32,0.16); border-radius:2px; font-family:var(--sans); font-size:14px; background:#fff;
+}
+.lead-form button{
+  font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:0.08em; background:var(--ink); color:var(--ivory);
+  border:none; padding:15px; border-radius:2px; cursor:pointer; transition:opacity 0.3s ease;
+}
+.lead-form button:hover{opacity:0.85;}
+.lead-fine{font-family:var(--sans); font-size:10px; color:var(--ink-faint); margin-top:16px; letter-spacing:0.02em;}
+
+/* ===== MAGNETIC / CURSOR-REACTIVE BUTTONS ===== */
+.magnetic{position:relative; will-change:transform; transition:transform 0.25s cubic-bezier(.16,.84,.44,1);}
+#cursor-dot{
+  position:fixed; top:0; left:0; width:8px; height:8px; border-radius:50%; background:var(--gold);
+  pointer-events:none; z-index:999; transform:translate(-50%,-50%); transition:width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+  opacity:0;
+}
+#cursor-dot.active{opacity:1;}
+#cursor-dot.grow{width:44px; height:44px; background:rgba(212,175,55,0.16); border:1px solid var(--gold);}
+@media(max-width:900px){#cursor-dot{display:none;}}
+
+/* ===== AMBIENT GLOBAL ATMOSPHERE ===== */
+#ambient-field{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;}
+#ambient-field .particle{position:absolute; background:var(--gold);}
+#ambient-field .fog{
+  position:absolute; width:900px; height:900px; border-radius:50%; filter:blur(120px); opacity:0.05;
+  background:radial-gradient(circle, var(--gold), transparent 70%);
+  animation:fogdrift 40s ease-in-out infinite alternate;
+}
+#ambient-field .fog.f2{background:radial-gradient(circle, var(--cocoa), transparent 70%); animation-duration:52s; animation-direction:alternate-reverse;}
+@keyframes fogdrift{0%{transform:translate(0,0);} 100%{transform:translate(120px,80px);}}
+
+/* ===== FLOATING LUXURY CARDS ===== */
+.card-field{position:absolute; inset:0; z-index:1; pointer-events:none;}
+.credit-card{
+  position:absolute; width:220px; height:139px; border-radius:14px; padding:18px;
+  display:flex; flex-direction:column; justify-content:space-between;
+  box-shadow:0 30px 60px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.12);
+  animation:cardfloat 14s ease-in-out infinite;
+  will-change:transform;
+}
+.credit-card::before{
+  content:''; position:absolute; inset:0; border-radius:14px;
+  background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.14) 45%, transparent 60%);
+  background-size:220% 220%; animation:sweep 6s ease-in-out infinite;
+}
+.card-chip{width:32px; height:24px; border-radius:4px; background:linear-gradient(155deg, #cdbb8a, #8f7a45); position:relative;}
+.card-chip::after{content:''; position:absolute; inset:3px; border:1px solid rgba(0,0,0,0.25); border-radius:2px;}
+.card-contactless{width:16px; height:16px; align-self:flex-start; opacity:0.7;}
+.card-bottom{display:flex; justify-content:space-between; align-items:flex-end;}
+.card-engrave{font-family:var(--sans); font-size:9px; letter-spacing:0.18em; opacity:0.55;}
+.card-dots{display:flex; gap:3px;}
+.card-dots span{width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.3);}
+.card-titanium{background:linear-gradient(155deg, #2a2e35, #0d0f13); border:1px solid rgba(255,255,255,0.08);}
+.card-midnight{background:linear-gradient(155deg, #16233b, #060b16); border:1px solid rgba(212,175,55,0.18);}
+.card-champagne{background:linear-gradient(155deg, #d9c58f, #a3874a); border:1px solid rgba(255,255,255,0.25); color:#1a1204;}
+.card-champagne .card-chip{background:linear-gradient(155deg,#3a2f14,#1a1204);}
+.card-carbon{background:repeating-linear-gradient(45deg, #1a1a1a, #1a1a1a 3px, #121212 3px, #121212 6px); border:1px solid rgba(255,255,255,0.06);}
+.card-1{top:8%; left:4%; transform:rotate(-9deg); animation-delay:0s;}
+.card-2{top:52%; left:2%; transform:rotate(6deg); animation-delay:-4s; width:190px; height:120px;}
+.card-3{top:14%; right:2%; transform:rotate(11deg); animation-delay:-8s;}
+.card-4{top:58%; right:5%; transform:rotate(-7deg); animation-delay:-11s; width:190px; height:120px;}
+@keyframes cardfloat{0%,100%{transform:translateY(0) rotate(var(--r,0deg));} 50%{transform:translateY(-18px) rotate(calc(var(--r,0deg) + 1.5deg));}}
+@keyframes sweep{0%,100%{background-position:-40% -40%;} 50%{background-position:140% 140%;}}
+@media(max-width:960px){.card-field{display:none;}}
+
+/* ===== COMMAND CENTER DASHBOARD ===== */
+.dash-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:70px;}
+.dash-panel{
+  background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:6px; padding:26px;
+  backdrop-filter:blur(6px); position:relative; overflow:hidden;
+}
+.dash-panel::before{content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent); opacity:0.5;}
+.dash-label{font-family:var(--sans); font-size:11px; letter-spacing:0.08em; color:var(--ink-soft); text-transform:uppercase;}
+.dash-value{font-family:var(--numbers); font-weight:600; font-size:30px; color:var(--gold); margin-top:10px;}
+.dash-sub{font-family:var(--sans); font-size:11px; color:var(--ink-faint); margin-top:6px;}
+.dash-meter{height:5px; background:rgba(255,255,255,0.08); border-radius:4px; margin-top:16px; overflow:hidden;}
+.dash-meter-fill{height:100%; background:linear-gradient(90deg,var(--cocoa),var(--gold)); width:0%; transition:width 1.3s cubic-bezier(.16,.84,.44,1);}
+.dash-streak{display:flex; gap:5px; margin-top:16px;}
+.dash-streak span{flex:1; height:22px; border-radius:2px; background:rgba(212,175,55,0.14); border:1px solid var(--line);}
+.dash-streak span.filled{background:var(--gold); border-color:var(--gold);}
+.dash-note{font-family:var(--sans); font-size:9px; color:var(--ink-faint); margin-top:18px; letter-spacing:0.02em; line-height:1.5;}
+@media(max-width:900px){.dash-grid{grid-template-columns:1fr;}}
+
+/* ===== QUOTE BREAK (motivational) ===== */
+.quote-break{padding:100px 0; text-align:center; position:relative;}
+.quote-break .wrap{max-width:760px;}
+.quote-mark{font-family:var(--heading); font-size:60px; color:var(--gold); opacity:0.4; line-height:1;}
+.quote-break blockquote{
+  font-family:var(--heading); font-size:clamp(24px,3.4vw,38px); line-height:1.4; margin-top:10px;
+}
+.quote-break cite{display:block; margin-top:24px; font-family:var(--sans); font-size:11px; letter-spacing:0.1em; color:var(--ink-faint); font-style:normal; text-transform:uppercase;}
+.quote-break .divider{max-width:80px; margin:36px auto 0;}
+
+/* ===== CREDIT KNOWLEDGE FACTS ===== */
+.knowledge-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:70px;}
+.knowledge-card{background:var(--ink); padding:36px 30px; transition:background 0.4s ease;}
+.knowledge-card:hover{background:rgba(212,175,55,0.05);}
+.knowledge-icon{font-family:var(--sans); font-size:11px; color:var(--gold); letter-spacing:0.1em;}
+.knowledge-fact{font-family:var(--heading); font-size:19px; margin-top:16px; line-height:1.35;}
+.knowledge-detail{font-size:13.5px; color:var(--ink-soft); margin-top:12px; line-height:1.55;}
+@media(max-width:900px){.knowledge-grid{grid-template-columns:1fr;}}
+
+/* ===== 3D SPINNING CAROUSEL ===== */
+.carousel-stage{
+  position:relative; height:420px; margin-top:80px; perspective:1400px;
+  display:flex; align-items:center; justify-content:center;
+}
+.carousel-ring{
+  position:relative; width:170px; height:230px; transform-style:preserve-3d;
+  cursor:grab;
+}
+.carousel-ring.grabbing{cursor:grabbing;}
+.carousel-card{
+  position:absolute; inset:0; border-radius:6px; padding:22px;
+  background:linear-gradient(155deg, var(--slate), var(--ink)); border:1px solid var(--line);
+  display:flex; flex-direction:column; justify-content:space-between;
+  backface-visibility:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.5);
+  transition:border-color 0.4s ease;
+}
+.carousel-card:hover{border-color:var(--gold);}
+.carousel-card .cc-label{font-family:var(--sans); font-size:9px; letter-spacing:0.14em; color:var(--gold);}
+.carousel-card .cc-title{font-family:var(--heading); font-size:17px; line-height:1.25; margin-top:10px;}
+.carousel-card .cc-spine{position:absolute; left:0; top:0; bottom:0; width:5px; background:linear-gradient(var(--gold), var(--cocoa)); border-radius:6px 0 0 6px;}
+.carousel-floor{
+  position:absolute; bottom:-14px; left:50%; transform:translateX(-50%); width:340px; height:70px;
+  background:radial-gradient(ellipse, rgba(212,175,55,0.16), transparent 70%); filter:blur(4px);
+}
+.carousel-hint{text-align:center; font-family:var(--sans); font-size:10px; letter-spacing:0.1em; color:var(--ink-faint); margin-top:20px; text-transform:uppercase;}
+@media(max-width:760px){.carousel-stage{height:340px;} .carousel-ring{width:130px; height:180px;}}
+
+/* ===== COOKIE CONSENT BANNER ===== */
+#cookie-banner{
+  position:fixed; bottom:0; left:0; right:0; z-index:950; background:var(--slate); border-top:1px solid var(--line);
+  padding:22px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  transform:translateY(100%); transition:transform 0.5s cubic-bezier(.16,.84,.44,1);
+}
+#cookie-banner.show{transform:translateY(0);}
+#cookie-banner p{font-size:13px; color:var(--ink-soft); max-width:640px; line-height:1.5; margin:0;}
+#cookie-banner p a{color:var(--gold); text-decoration:underline; text-underline-offset:2px;}
+.cookie-actions{display:flex; gap:12px; flex-shrink:0;}
+.cookie-actions button{
+  font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:0.05em; padding:11px 20px; border-radius:2px; cursor:pointer; border:1px solid var(--line);
+}
+#cookie-accept{background:var(--gold); color:var(--ink); border-color:var(--gold);}
+#cookie-decline{background:transparent; color:var(--ivory);}
+@media(max-width:700px){#cookie-banner{padding:20px;} .cookie-actions{width:100%;} .cookie-actions button{flex:1;}}
+
+/* ===== SCENE 13 — FOOTER ===== */
+footer{background:var(--slate); padding:90px 0 40px; position:relative;}
+.footer-top{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:50px;}
+.footer-logo{font-family:var(--heading); font-size:24px;}
+.footer-tag{color:var(--ink-soft); font-size:14px; margin-top:16px; max-width:260px; line-height:1.6;}
+.footer-col h4{font-family:var(--sans); font-size:11px; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase; margin-bottom:18px;}
+.footer-col a{display:block; font-size:14px; color:var(--ink-soft); margin-bottom:12px; transition:color 0.3s ease;}
+.footer-col a:hover{color:var(--ivory);}
+.newsletter{display:flex; margin-top:20px; border:1px solid var(--line); border-radius:2px; overflow:hidden; max-width:280px;}
+.newsletter input{flex:1; background:transparent; border:none; padding:12px 14px; color:var(--ivory); font-size:13px; font-family:var(--sans);}
+.newsletter input::placeholder{color:var(--ink-faint);}
+.newsletter button{background:var(--gold); color:var(--ink); border:none; padding:0 18px; font-family:var(--sans); font-weight:600; font-size:12px; cursor:pointer;}
+.footer-bottom{margin-top:80px; padding-top:28px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-family:var(--sans); font-size:11px; color:var(--ink-faint);}
+@media(max-width:860px){.footer-top{grid-template-columns:1fr 1fr; row-gap:40px;}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<div id="ambient-field"><div class="fog" style="top:5%; left:60%;"></div><div class="fog f2" style="top:60%; left:5%;"></div><div class="fog" style="top:85%; left:70%;"></div></div>
+
+<div id="cursor-dot"></div>
+
+<div id="preview-overlay">
+  <div class="preview-modal">
+    <button class="preview-close" aria-label="Close preview">✕ CLOSE</button>
+    <div class="eyebrow" id="preview-eyebrow">Preview</div>
+    <h3 id="preview-title">Product Title</h3>
+    <div class="preview-placeholder">
+      SAMPLE PAGES GO HERE<br><br>
+      Add 2–3 real screenshots or sample spreads from this product so buyers can see what's inside before purchasing. Actual page previews convert meaningfully better than description text alone.
+    </div>
+  </div>
+</div>
+
+<div id="lead-overlay">
+  <div class="lead-modal">
+    <button class="lead-close" aria-label="Close">✕ CLOSE</button>
+    <div class="eyebrow">Free download</div>
+    <h3>5 Credit Mistakes Nobody Warns You About</h3>
+    <p>The short guide people read before they buy anything else — get it free, no strings attached.</p>
+    <form class="lead-form" onsubmit="return false;">
+      <input type="email" placeholder="Your email" aria-label="Email address" required>
+      <button type="submit">Send me the guide →</button>
+    </form>
+    <div class="lead-fine">NO SPAM. UNSUBSCRIBE ANYTIME.</div>
+  </div>
+</div>
+
+<div id="arc-fixed">
+  <svg viewBox="0 0 60 60"><circle id="arc-track" cx="30" cy="30" r="26"/><circle id="arc-fill" cx="30" cy="30" r="26"/></svg>
+  <div id="arc-label">00</div>
+</div>
+
+<nav id="nav">
+  <div class="logo">The Wealth Brief</div>
+  <div class="nav-links">
+    <a href="#solution">Products</a>
+    <a href="#journey">Journey</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <!-- REPLACE "COLLECTION-KEY" with your Payhip product key for the bundle (same as pricing section) -->
+  <a href="https://payhip.com/b/COLLECTION-KEY" class="payhip-buy-button nav-cta" data-theme="none" data-product="COLLECTION-KEY">GET ACCESS</a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="mobile-nav-overlay"></div>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation">
+  <a href="#solution">Products</a>
+  <a href="#journey">Journey</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+</nav>
+
+<main id="main-content">
+
+<div id="sticky-buy">
+  <span>The Complete Collection — $47</span>
+  <!-- REPLACE "COLLECTION-KEY" with your Payhip product key for the bundle (same as pricing section) -->
+  <a href="https://payhip.com/b/COLLECTION-KEY" class="payhip-buy-button" data-theme="none" data-product="COLLECTION-KEY" style="font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:0.06em; background:var(--ink); color:var(--ivory); border:none; padding:12px 22px; border-radius:100px; cursor:pointer; display:inline-block;">Buy now</a>
+</div>
+
+<!-- SCENE 1 — HERO -->
+<section class="hero" id="hero">
+  <div id="hero-particles"></div>
+  <div class="card-field">
+    <div class="credit-card card-titanium card-1" style="color:#eee;"><div class="card-bottom" style="justify-content:space-between;"><div class="card-chip"></div><div class="card-dots"><span></span><span></span><span></span></div></div><div class="card-bottom"><span class="card-engrave">OBSIDIAN · ****</span><svg class="card-contactless" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 12a6 6 0 0 1 6-6"/><path d="M6 16a10 10 0 0 1 10-10"/></svg></div></div>
+    <div class="credit-card card-midnight card-2" style="color:#eee;"><div class="card-bottom" style="justify-content:space-between;"><div class="card-chip"></div><div class="card-dots"><span></span><span></span><span></span></div></div><div class="card-bottom"><span class="card-engrave">MIDNIGHT · ****</span><svg class="card-contactless" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 12a6 6 0 0 1 6-6"/><path d="M6 16a10 10 0 0 1 10-10"/></svg></div></div>
+    <div class="credit-card card-champagne card-3"><div class="card-bottom" style="justify-content:space-between;"><div class="card-chip"></div><div class="card-dots"><span style="background:rgba(0,0,0,0.25);"></span><span style="background:rgba(0,0,0,0.25);"></span><span style="background:rgba(0,0,0,0.25);"></span></div></div><div class="card-bottom"><span class="card-engrave">CHAMPAGNE · ****</span><svg class="card-contactless" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 12a6 6 0 0 1 6-6"/><path d="M6 16a10 10 0 0 1 10-10"/></svg></div></div>
+    <div class="credit-card card-carbon card-4" style="color:#eee;"><div class="card-bottom" style="justify-content:space-between;"><div class="card-chip"></div><div class="card-dots"><span></span><span></span><span></span></div></div><div class="card-bottom"><span class="card-engrave">CARBON · ****</span><svg class="card-contactless" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 12a6 6 0 0 1 6-6"/><path d="M6 16a10 10 0 0 1 10-10"/></svg></div></div>
+  </div>
+  <svg class="hero-arc" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(212,175,55,0.14)" stroke-width="1"/>
+    <circle cx="100" cy="100" r="86" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="540" stroke-dashoffset="140" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="eyebrow reveal in">A financial education library</div>
+    <h1 class="reveal in">The financial knowledge<br>you were <em>never</em> taught.</h1>
+    <p class="lead reveal in reveal-delay-1">Credit eBooks, workbooks, and planners built with the same rigor as a private financial education — priced like a download, not a degree.</p>
+    <div class="hero-ctas reveal in reveal-delay-2">
+      <a href="#pricing" class="btn-primary magnetic">Explore the collection →</a>
+      <a href="#solution" class="btn-ghost magnetic">See what's inside</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><div class="line"></div></div>
+</section>
+
+<!-- SCENE 2 — THE PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <div class="eyebrow reveal">The gap</div>
+    <h2 class="section-title reveal">Most people weren't taught this. So most people stay stuck.</h2>
+    <div class="stat-grid">
+      <div class="stat-cell reveal"><div class="stat-num">73%</div><div class="stat-desc">of adults say they never received formal financial education in school.</div></div>
+      <div class="stat-cell reveal reveal-delay-1"><div class="stat-num">1 in 3</div><div class="stat-desc">don't know their own credit score, let alone what moves it.</div></div>
+      <div class="stat-cell reveal reveal-delay-2"><div class="stat-num">$0</div><div class="stat-desc">is what most guidance costs — and most people still don't use it.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BREAK 1 -->
+<section class="quote-break">
+  <div class="wrap">
+    <div class="quote-mark reveal">"</div>
+    <blockquote class="reveal">You don't need a fresh start. You need one clear next step — and then the one after that.</blockquote>
+    <cite class="reveal">The Wealth Brief</cite>
+    <div class="divider reveal"></div>
+  </div>
+</section>
+
+<!-- SCENE 3 — THE SOLUTION -->
+<section id="solution" class="section-slate">
+  <div class="wrap">
+    <div class="eyebrow reveal">The library</div>
+    <h2 class="section-title reveal">Eight ways in. One system underneath.</h2>
+    <div class="book-row">
+      <div class="book-card reveal"><div class="book-face" style="background-image:url('assets/covers/mastering-credit.png')" data-title="Mastering Credit"><div class="book-scrim"></div><div class="book-actions"><!-- REPLACE "MASTERING-CREDIT-KEY" with this product's Payhip key --><a href="https://payhip.com/b/MASTERING-CREDIT-KEY" class="payhip-buy-button book-buy" data-theme="none" data-product="MASTERING-CREDIT-KEY">Buy — $17</a><button class="book-preview-link" data-preview-open="1">Preview</button></div></div></div>
+      <div class="book-card reveal reveal-delay-1"><div class="book-face" style="background-image:url('assets/covers/credit-dispute-toolkit.png')" data-title="Credit Dispute Toolkit"><div class="book-scrim"></div><div class="book-actions"><!-- REPLACE "DISPUTE-TOOLKIT-KEY" with this product's Payhip key --><a href="https://payhip.com/b/DISPUTE-TOOLKIT-KEY" class="payhip-buy-button book-buy" data-theme="none" data-product="DISPUTE-TOOLKIT-KEY">Buy — $17</a><button class="book-preview-link" data-preview-open="1">Preview</button></div></div></div>
+      <div class="book-card reveal reveal-delay-2"><div class="book-face" style="background-image:url('assets/covers/budget-and-goals.png')" data-title="Budget & Goals"><div class="book-scrim"></div><div class="book-actions"><!-- REPLACE "BUDGET-GOALS-KEY" with this product's Payhip key --><a href="https://payhip.com/b/BUDGET-GOALS-KEY" class="payhip-buy-button book-buy" data-theme="none" data-product="BUDGET-GOALS-KEY">Buy — $17</a><button class="book-preview-link" data-preview-open="1">Preview</button></div></div></div>
+      <div class="book-card reveal reveal-delay-3"><div class="book-face" style="background-image:url('assets/covers/command-center.png')" data-title="Command Center"><div class="book-scrim"></div><div class="book-actions"><a href="https://payhip.com/b/7Mbc5" class="payhip-buy-button book-buy" data-theme="none" data-product="7Mbc5">Buy — $10</a><button class="book-preview-link" data-preview-open="1">Preview</button></div></div></div>
+      <div class="book-card reveal"><div class="book-face" style="background-image:url('assets/covers/reading-your-credit-report.png')" data-title="Reading Your Credit Report"><div class="book-scrim"></div><div class="book-actions"><!-- REPLACE "READING-REPORT-KEY" with this product's Payhip key --><a href="https://payhip.com/b/READING-REPORT-KEY" class="payhip-buy-button book-buy" data-theme="none" data-product="READING-REPORT-KEY">Buy — $17</a><button class="book-preview-link" data-preview-open="1">Preview</button></div></div></div>
+      <div class="book-card reveal reveal-delay-1"><div class="book-face" style="background-image:url('assets/covers/wealth-tracker.png')" data-title="Wealth Tracker"><div class="book-scrim"></div><div class="book-actions"><a href="https://payhip.com/b/MtS9H" class="payhip-buy-button book-buy" data-theme="none" data-product="MtS9H">Buy — $13</a><button class="book-preview-link" data-preview-open="1">Preview</button></div></div></div>
+      <div class="book-card reveal reveal-delay-2"><div class="book-face" style="background-image:url('assets/covers/saving-on-autopilot.png')" data-title="Saving on Autopilot"><div class="book-scrim"></div><div class="book-actions"><!-- REPLACE "SAVING-AUTOPILOT-KEY" with this product's Payhip key --><a href="https://payhip.com/b/SAVING-AUTOPILOT-KEY" class="payhip-buy-button book-buy" data-theme="none" data-product="SAVING-AUTOPILOT-KEY">Buy — $17</a><button class="book-preview-link" data-preview-open="1">Preview</button></div></div></div>
+      <div class="book-card reveal reveal-delay-3"><div class="book-face" style="background-image:url('assets/covers/investing-101.png')" data-title="Investing 101: The Basics"><div class="book-scrim"></div><div class="book-actions"><!-- REPLACE "INVESTING-101-KEY" with this product's Payhip key --><a href="https://payhip.com/b/INVESTING-101-KEY" class="payhip-buy-button book-buy" data-theme="none" data-product="INVESTING-101-KEY">Buy — $17</a><button class="book-preview-link" data-preview-open="1">Preview</button></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 3B — 3D CAROUSEL -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">The full collection, in motion</div>
+    <h2 class="section-title reveal">Every title, orbiting one system.</h2>
+    <div class="carousel-stage reveal">
+      <div class="carousel-floor"></div>
+      <div class="carousel-ring" id="carousel-ring">
+        <!-- 8 cards placed via JS around a circle -->
+      </div>
+    </div>
+    <div class="carousel-hint">Hover to pause · drag to spin</div>
+  </div>
+</section>
+
+<!-- SCENE 4 — TRUST -->
+<section class="section-ivory">
+  <div class="wrap">
+    <div class="eyebrow reveal">Why here</div>
+    <h2 class="section-title reveal">Built by someone who had to learn this the hard way — and wrote down everything that worked.</h2>
+    <!-- These 4 numbers are structural facts about the library, not performance/social-proof claims — safe to keep as-is, or edit the labels if your catalog changes -->
+    <div class="trust-row">
+      <div class="reveal"><div class="trust-num" data-count="8">0</div><div class="trust-label">Titles in the library</div></div>
+      <div class="reveal reveal-delay-1"><div class="trust-num" data-count="4">0</div><div class="trust-label">Core product lines</div></div>
+      <div class="reveal reveal-delay-2"><div class="trust-num" data-count="3">0</div><div class="trust-label">Platforms available on</div></div>
+      <div class="reveal reveal-delay-3"><div class="trust-num" data-count="100">0</div><div class="trust-label">% instant digital delivery</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 5 — WHAT'S INSIDE -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">What's inside</div>
+    <h2 class="section-title reveal">Every product answers a specific question.</h2>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feature-head"><div><span class="feature-num">01</span> <h3 style="display:inline;margin-left:14px;">What's actually on my credit report?</h3></div><span class="feature-plus">+</span></div>
+        <div class="feature-body"><p>A plain-language breakdown of every factor that moves your score, with visuals instead of jargon — so you can read your own report like a professional does.</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-head"><div><span class="feature-num">02</span> <h3 style="display:inline;margin-left:14px;">How do I actually dispute an error?</h3></div><span class="feature-plus">+</span></div>
+        <div class="feature-body"><p>Step-by-step workbook pages plus templated language, so you're never staring at a blank page when something on your report is wrong.</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-head"><div><span class="feature-num">03</span> <h3 style="display:inline;margin-left:14px;">Where does my money actually go?</h3></div><span class="feature-plus">+</span></div>
+        <div class="feature-body"><p>Budget and goal planners built around how money really moves in a month — not a generic 50/30/20 rule that ignores your life.</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-head"><div><span class="feature-num">04</span> <h3 style="display:inline;margin-left:14px;">Can I track all of this in one place?</h3></div><span class="feature-plus">+</span></div>
+        <div class="feature-body"><p>The Command Center brings credit, debt, bills, and savings into a single interactive dashboard — no spreadsheets, no separate apps.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 6 — LEARNING JOURNEY -->
+<section id="journey" class="section-slate">
+  <div class="wrap">
+    <div class="eyebrow reveal">The path</div>
+    <h2 class="section-title reveal">A journey with an actual order to it.</h2>
+    <p class="reveal" style="color:var(--ink-soft); margin-top:16px; max-width:520px;">Small, sequential wins compound. You don't need to fix everything this week — you need to start with stage one.</p>
+    <div class="timeline">
+      <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-stage">Stage 1</div><h3>Understand your starting score</h3><p>Read your credit report correctly for the first time — know exactly what's helping and hurting you.</p></div>
+      <div class="tl-item reveal reveal-delay-1"><div class="tl-dot"></div><div class="tl-stage">Stage 2</div><h3>Fix what's fixable</h3><p>Use the dispute templates and toolkit to correct errors and address the highest-impact issues first.</p></div>
+      <div class="tl-item reveal reveal-delay-2"><div class="tl-dot"></div><div class="tl-stage">Stage 3</div><h3>Build the budget that holds</h3><p>Set up a planner that survives real months — irregular income, surprise bills, and all.</p></div>
+      <div class="tl-item reveal reveal-delay-3"><div class="tl-dot"></div><div class="tl-stage">Stage 4</div><h3>Track it without thinking about it</h3><p>Move into the Command Center so progress becomes something you glance at, not something you dread.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 6B — CREDIT KNOWLEDGE -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">Actually true</div>
+    <h2 class="section-title reveal">Six things about credit most people never get told plainly.</h2>
+    <div class="knowledge-grid">
+      <div class="knowledge-card reveal">
+        <div class="knowledge-icon">01 · PAYMENT HISTORY</div>
+        <div class="knowledge-fact">It's the single biggest factor.</div>
+        <div class="knowledge-detail">Payment history makes up roughly 35% of a FICO score — more than any other category. One late payment can matter more than several other factors combined.</div>
+      </div>
+      <div class="knowledge-card reveal reveal-delay-1">
+        <div class="knowledge-icon">02 · UTILIZATION</div>
+        <div class="knowledge-fact">Under 30% helps. Under 10% helps more.</div>
+        <div class="knowledge-detail">Utilization is how much of your available credit you're using. Even if you pay in full every month, a high balance on statement day can still lower your score.</div>
+      </div>
+      <div class="knowledge-card reveal reveal-delay-2">
+        <div class="knowledge-icon">03 · OLD ACCOUNTS</div>
+        <div class="knowledge-fact">Closing your oldest card can backfire.</div>
+        <div class="knowledge-detail">Length of credit history matters. Closing your longest-standing account can shorten your average account age and lower your available credit at the same time.</div>
+      </div>
+      <div class="knowledge-card reveal">
+        <div class="knowledge-icon">04 · HARD INQUIRIES</div>
+        <div class="knowledge-fact">One application isn't a big deal.</div>
+        <div class="knowledge-detail">A single hard inquiry typically costs a handful of points and fades from impact within about a year — it's rarely the reason a score drops significantly.</div>
+      </div>
+      <div class="knowledge-card reveal reveal-delay-1">
+        <div class="knowledge-icon">05 · INCOME</div>
+        <div class="knowledge-fact">Your income isn't part of the score.</div>
+        <div class="knowledge-detail">Credit scores measure how you manage credit, not how much you earn. Two people with identical habits and different incomes can have the same score.</div>
+      </div>
+      <div class="knowledge-card reveal reveal-delay-2">
+        <div class="knowledge-icon">06 · CHECKING YOUR OWN SCORE</div>
+        <div class="knowledge-fact">Looking at your own score never hurts it.</div>
+        <div class="knowledge-detail">Checking your own credit is a "soft" inquiry and has zero impact on your score — there's no reason to avoid looking.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 7 — RESULTS -->
+<!--
+  NOTE: This previously showed specific percentages (91%, 64%, etc.) framed as
+  measured customer outcomes. Those numbers were placeholder copy I wrote, not
+  real survey data — presenting invented stats as real results is misleading.
+  Reframed as what the system is designed to help with, which is honest without
+  needing data you don't have yet. If you later run a real customer survey,
+  the .bar-row/.bar-fill styles are still defined above and easy to bring back
+  with real numbers.
+-->
+<section>
+  <div class="wrap results-grid">
+    <div>
+      <div class="eyebrow reveal">What changes</div>
+      <h2 class="section-title reveal">Small, trackable shifts — not overnight miracles.</h2>
+      <p class="reveal" style="color:var(--ink-soft); margin-top:20px; max-width:480px; line-height:1.6;">No product here promises a fixed score jump — anyone who does is lying to you. What it promises is clarity on what to do next, tracked in one place.</p>
+    </div>
+    <div class="goal-list reveal reveal-delay-1">
+      <div class="goal-row"><span class="goal-check">✓</span><span>Read your own credit report without guessing what it means</span></div>
+      <div class="goal-row"><span class="goal-check">✓</span><span>Know exactly how to file a dispute when something's wrong</span></div>
+      <div class="goal-row"><span class="goal-check">✓</span><span>Build a budget that survives a real, irregular month</span></div>
+      <div class="goal-row"><span class="goal-check">✓</span><span>Track credit, debt, and savings in one place instead of four</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 7B — COMMAND CENTER (educational dashboard) -->
+<section class="section-slate">
+  <div class="wrap">
+    <div class="eyebrow reveal">Inside the command center</div>
+    <h2 class="section-title reveal">What healthy habits look like, tracked.</h2>
+    <p class="reveal" style="color:var(--ink-soft); margin-top:16px; max-width:560px;">Illustrative examples of the indicators the dashboard tracks — shown to demonstrate how the tool works, not as a promise of personal results.</p>
+    <div class="dash-grid">
+      <div class="dash-panel reveal">
+        <div class="dash-label">Credit score</div>
+        <div class="dash-value">712</div>
+        <div class="dash-sub">↑ 38 pts since start</div>
+        <div class="dash-meter"><div class="dash-meter-fill" data-width="74"></div></div>
+      </div>
+      <div class="dash-panel reveal reveal-delay-1">
+        <div class="dash-label">Credit utilization</div>
+        <div class="dash-value">21%</div>
+        <div class="dash-sub">↓ from 58% at start</div>
+        <div class="dash-meter"><div class="dash-meter-fill" data-width="21"></div></div>
+      </div>
+      <div class="dash-panel reveal reveal-delay-2">
+        <div class="dash-label">On-time payment streak</div>
+        <div class="dash-value">9 mo</div>
+        <div class="dash-sub">Consecutive on-time payments</div>
+        <div class="dash-streak" id="streak-row"></div>
+      </div>
+      <div class="dash-panel reveal">
+        <div class="dash-label">Debt reduction</div>
+        <div class="dash-value">−$4,120</div>
+        <div class="dash-sub">Paid down this year</div>
+        <div class="dash-meter"><div class="dash-meter-fill" data-width="62"></div></div>
+      </div>
+      <div class="dash-panel reveal reveal-delay-1">
+        <div class="dash-label">Emergency fund</div>
+        <div class="dash-value">$2,400</div>
+        <div class="dash-sub">Goal: $5,000</div>
+        <div class="dash-meter"><div class="dash-meter-fill" data-width="48"></div></div>
+      </div>
+      <div class="dash-panel reveal reveal-delay-2">
+        <div class="dash-label">Budget completion</div>
+        <div class="dash-value">86%</div>
+        <div class="dash-sub">Categories on track this month</div>
+        <div class="dash-meter"><div class="dash-meter-fill" data-width="86"></div></div>
+      </div>
+    </div>
+    <div class="dash-note reveal">ILLUSTRATIVE EXAMPLE ONLY — INDIVIDUAL RESULTS VARY BASED ON PERSONAL FINANCIAL CIRCUMSTANCES.</div>
+  </div>
+</section>
+
+<!-- SCENE 8 — SHOWCASE SHELF -->
+<section class="section-slate">
+  <div class="wrap">
+    <div class="eyebrow reveal">The shelf</div>
+    <h2 class="section-title reveal">Every product, side by side.</h2>
+    <div class="shelf">
+      <div class="shelf-item reveal"><span class="shelf-tag">MASTERING CREDIT</span></div>
+      <div class="shelf-item reveal reveal-delay-1"><span class="shelf-tag">DISPUTE TOOLKIT</span></div>
+      <div class="shelf-item reveal reveal-delay-2"><span class="shelf-tag">BUDGET PLANNER</span></div>
+      <div class="shelf-item reveal reveal-delay-3"><span class="shelf-tag">COMMAND CENTER</span></div>
+      <div class="shelf-item reveal"><span class="shelf-tag">READING YOUR REPORT</span></div>
+      <div class="shelf-item reveal reveal-delay-1"><span class="shelf-tag">WEALTH TRACKER</span></div>
+      <div class="shelf-item reveal reveal-delay-2"><span class="shelf-tag">SAVING ON AUTOPILOT</span></div>
+      <div class="shelf-item reveal reveal-delay-3"><span class="shelf-tag">INVESTING 101</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 9 — PRICING -->
+<section id="pricing" class="section-ivory">
+  <div class="wrap">
+    <div class="eyebrow reveal">Choose your entry point</div>
+    <h2 class="section-title reveal">Buy one, or buy the system.</h2>
+    <div class="price-grid">
+      <div class="price-card reveal">
+        <div class="price-tier">Single Product</div>
+        <div class="price-amt">$17</div>
+        <ul class="price-list"><li>Choose 1 of 8 titles</li><li>eBooks, workbooks & planners</li><li>Lifetime access</li><li>Instant download</li></ul>
+        <a href="#solution" class="btn-ghost">Browse all 8 titles ↑</a>
+      </div>
+      <div class="price-card featured reveal reveal-delay-1">
+        <div class="price-badge">MOST CHOSEN</div>
+        <div class="price-tier">Complete Collection</div>
+        <div class="price-amt">$47 <span>one time</span></div>
+        <ul class="price-list"><li>All eBooks & workbooks</li><li>Budget & goal planners</li><li>Command Center dashboard</li><li>Free lifetime updates</li></ul>
+        <!-- REPLACE "COLLECTION-KEY" with your Payhip product key for the bundle -->
+        <a href="https://payhip.com/b/COLLECTION-KEY" class="payhip-buy-button btn-primary" data-theme="none" data-product="COLLECTION-KEY">Get the collection</a>
+      </div>
+      <div class="price-card reveal reveal-delay-2">
+        <div class="price-tier">Notion System</div>
+        <div class="price-amt">$27</div>
+        <ul class="price-list"><li>Full Notion workspace</li><li>Auto-updating trackers</li><li>Works on any device</li></ul>
+        <!-- REPLACE "NOTION-KEY" with your Payhip product key for the Notion template -->
+        <a href="https://payhip.com/b/NOTION-KEY" class="payhip-buy-button btn-ghost" data-theme="none" data-product="NOTION-KEY">Get the template</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 10 — COMMUNITY -->
+<!--
+  NOTE: The 3 testimonial quotes previously here were placeholder copy I wrote,
+  not real customer feedback. Shipping invented reviews attributed to "verified
+  buyers" is a genuine legal risk (FTC endorsement guidelines require reviews
+  to be real). Replaced with an honest founder note for now. Once you have
+  actual reviews from Etsy/Payhip/StanStore, swap this section back to the
+  testi-row/testi-card layout (still defined in the CSS above) with real quotes.
+-->
+<section>
+  <div class="wrap" style="max-width:720px;">
+    <div class="eyebrow reveal">Why this exists</div>
+    <h2 class="section-title reveal">Written by someone who had to figure this out the hard way.</h2>
+    <p class="reveal" style="color:var(--ink-soft); margin-top:22px; font-size:16px; line-height:1.7;">
+      Nobody sat me down and explained how credit actually worked, why utilization mattered, or what a hard inquiry really cost me. I learned it the slow way — through mistakes, late nights researching, and a lot of trial and error. The Wealth Brief is the resource I wish I'd had: the plain-language version of everything that eventually clicked.
+    </p>
+    <p class="reveal reveal-delay-1" style="color:var(--ink-soft); margin-top:16px; font-size:16px; line-height:1.7;">
+      Real customer reviews will go here once the collection has them — for now, the goal is simple: build something genuinely useful enough to earn that trust.
+    </p>
+  </div>
+</section>
+
+<!-- SCENE 11 — FAQ -->
+<section id="faq" class="section-slate">
+  <div class="wrap" style="max-width:820px;">
+    <div class="eyebrow reveal">Questions</div>
+    <h2 class="section-title reveal">Before you buy.</h2>
+    <div style="margin-top:50px; border-top:1px solid var(--line);">
+      <div class="faq-item"><div class="faq-q">Is this financial advice?<span class="faq-plus">+</span></div><div class="faq-a"><p>No — these are educational tools to help you understand and organize your own finances. They're not a substitute for licensed financial or legal advice.</p></div></div>
+      <div class="faq-item"><div class="faq-q">What format do the products come in?<span class="faq-plus">+</span></div><div class="faq-a"><p>PDF for eBooks, workbooks, and planners; a self-contained HTML app for the Command Center; and a duplicable workspace for the Notion template.</p></div></div>
+      <div class="faq-item"><div class="faq-q">Do I need Notion for everything?<span class="faq-plus">+</span></div><div class="faq-a"><p>No — only the Notion System product requires a free Notion account. Every other product works as a standalone download.</p></div></div>
+      <div class="faq-item"><div class="faq-q">Is there a refund policy?<span class="faq-plus">+</span></div><div class="faq-a"><p>Because these are instant digital downloads, all sales are final — but every product page includes a detailed preview so you know exactly what you're getting.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BREAK 2 -->
+<section class="quote-break section-slate">
+  <div class="wrap">
+    <div class="quote-mark reveal">"</div>
+    <blockquote class="reveal">Financial confidence isn't a personality trait. It's a skill — and every skill can be learned.</blockquote>
+    <cite class="reveal">The Wealth Brief</cite>
+    <div class="divider reveal"></div>
+  </div>
+</section>
+
+<!-- SCENE 12 — FINAL OFFER -->
+<section class="offer" id="offer">
+  <div class="wrap">
+    <div class="eyebrow reveal">Start today</div>
+    <h2 class="reveal">Your financial education was overdue. Not anymore.</h2>
+    <p class="reveal reveal-delay-1">Get the complete collection today — every eBook, workbook, planner, and the Command Center dashboard, in one download.</p>
+    <div class="value-row reveal reveal-delay-2">
+      <div class="value-cell"><div class="value-icon">⚡</div><div class="value-text">Instant download<br>after checkout</div></div>
+      <div class="value-cell"><div class="value-icon">♾</div><div class="value-text">Lifetime access,<br>no subscription</div></div>
+      <div class="value-cell"><div class="value-icon">↻</div><div class="value-text">Free updates<br>when content improves</div></div>
+    </div>
+    <!-- REPLACE "COLLECTION-KEY" with your Payhip product key for the bundle (same as pricing section) -->
+    <a href="https://payhip.com/b/COLLECTION-KEY" class="payhip-buy-button btn-primary magnetic reveal reveal-delay-3" data-theme="none" data-product="COLLECTION-KEY" style="margin-top:44px;">Get instant access — $47</a>
+    <div class="guarantee reveal reveal-delay-3">🔒 Secure checkout · Instant download · No subscription</div>
+  </div>
+</section>
+
+</main>
+
+<div id="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <p>This site uses cookies for basic functionality and analytics. See our <a href="legal/privacy-policy.html">Privacy Policy</a> for details.</p>
+  <div class="cookie-actions">
+    <button id="cookie-decline">Decline</button>
+    <button id="cookie-accept">Accept</button>
+  </div>
+</div>
+
+<!-- SCENE 13 — FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">The Wealth Brief</div>
+        <p class="footer-tag">The financial knowledge you were never taught — in eBooks, workbooks, planners, and templates built to actually get used.</p>
+        <form class="newsletter" id="footer-newsletter"><input type="email" placeholder="Your email" aria-label="Email address" required><button type="submit">Join</button></form>
+      </div>
+      <div class="footer-col"><h4>Shop</h4><a href="#">eBooks</a><a href="#">Workbooks</a><a href="#">Planners</a><a href="#">Notion templates</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">FAQ</a><a href="#">Contact</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="legal/privacy-policy.html">Privacy policy</a><a href="legal/terms-of-use.html">Terms of use</a><a href="legal/refund-policy.html">Refund policy</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 THE WEALTH BRIEF. ALL RIGHTS RESERVED.</span>
+      <span>INSTAGRAM · PINTEREST · TIKTOK</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Product preview modal — reads the title from whichever book card was clicked
+const previewOverlay = document.getElementById('preview-overlay');
+const previewTitle = document.getElementById('preview-title');
+document.querySelectorAll('[data-preview-open]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const card = btn.closest('.book-card');
+    const title = card ? card.querySelector('.book-face')?.dataset.title : 'This product';
+    previewTitle.textContent = title || 'This product';
+    previewOverlay.classList.add('show');
+  });
+});
+document.querySelector('.preview-close').addEventListener('click', ()=>previewOverlay.classList.remove('show'));
+previewOverlay.addEventListener('click', (e)=>{ if(e.target === previewOverlay) previewOverlay.classList.remove('show'); });
+
+// Footer newsletter — lightweight client-side feedback (wire to your real ESP/API before launch)
+const footerNewsletter = document.getElementById('footer-newsletter');
+if(footerNewsletter){
+  footerNewsletter.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    footerNewsletter.innerHTML = '<span style="padding:12px 14px; font-size:13px; color:var(--ivory);">You\'re on the list — thank you.</span>';
+  });
+}
+
+// Accessibility: hide purely decorative SVGs from assistive tech
+document.querySelectorAll('svg').forEach(svg=>{
+  if(!svg.querySelector('title')) svg.setAttribute('aria-hidden','true');
+});
+
+// Cookie consent — analytics only loads AFTER the visitor accepts, not before
+const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // REPLACE with your real GA4 Measurement ID
+function loadAnalytics(){
+  if(GA_MEASUREMENT_ID === 'G-XXXXXXXXXX') return; // not configured yet — skip silently
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', GA_MEASUREMENT_ID);
+}
+
+const cookieBanner = document.getElementById('cookie-banner');
+const cookieChoice = localStorage.getItem('twb_cookie_consent');
+if(cookieChoice === 'accepted'){
+  loadAnalytics();
+} else if(!cookieChoice){
+  cookieBanner.classList.add('show');
+}
+document.getElementById('cookie-accept').addEventListener('click', ()=>{
+  localStorage.setItem('twb_cookie_consent', 'accepted');
+  cookieBanner.classList.remove('show');
+  loadAnalytics();
+});
+document.getElementById('cookie-decline').addEventListener('click', ()=>{
+  localStorage.setItem('twb_cookie_consent', 'declined');
+  cookieBanner.classList.remove('show');
+});
+
+// Mobile nav toggle
+const navToggle = document.getElementById('nav-toggle');
+const mobileNav = document.getElementById('mobile-nav');
+const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+function closeMobileNav(){
+  mobileNav.classList.remove('open');
+  mobileNavOverlay.classList.remove('show');
+  navToggle.setAttribute('aria-expanded','false');
+}
+navToggle.addEventListener('click', ()=>{
+  const isOpen = mobileNav.classList.toggle('open');
+  mobileNavOverlay.classList.toggle('show', isOpen);
+  navToggle.setAttribute('aria-expanded', String(isOpen));
+});
+mobileNavOverlay.addEventListener('click', closeMobileNav);
+mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeMobileNav));
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMobileNav(); });
+
+// Reveal on scroll
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+},{threshold:0.15});
+document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
+
+// Nav scrolled state
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', ()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  // Sticky buy bar
+  const heroH = document.getElementById('hero').offsetHeight;
+  const offerTop = document.getElementById('offer').offsetTop;
+  const y = window.scrollY;
+  document.getElementById('sticky-buy').classList.toggle('show', y > heroH && y < offerTop + 200);
+
+  // Arc progress
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = Math.min(100, Math.max(0, (y / docH) * 100));
+  const circumference = 163;
+  document.getElementById('arc-fill').style.strokeDashoffset = circumference - (circumference * pct/100);
+  document.getElementById('arc-label').textContent = String(Math.round(pct)).padStart(2,'0');
+},{passive:true});
+
+// Feature accordion — keyboard accessible
+document.querySelectorAll('.feature-item').forEach(item=>{
+  const head = item.querySelector('.feature-head');
+  head.setAttribute('role','button');
+  head.setAttribute('tabindex','0');
+  head.setAttribute('aria-expanded','false');
+  function toggle(){
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.feature-item.open').forEach(o=>{
+      o.classList.remove('open');
+      o.querySelector('.feature-head').setAttribute('aria-expanded','false');
+    });
+    if(!wasOpen){ item.classList.add('open'); head.setAttribute('aria-expanded','true'); }
+  }
+  head.addEventListener('click', toggle);
+  head.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+  });
+});
+
+// FAQ accordion — keyboard accessible
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q = item.querySelector('.faq-q');
+  q.setAttribute('role','button');
+  q.setAttribute('tabindex','0');
+  q.setAttribute('aria-expanded','false');
+  function toggle(){
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o=>{
+      o.classList.remove('open');
+      o.querySelector('.faq-q').setAttribute('aria-expanded','false');
+    });
+    if(!wasOpen){ item.classList.add('open'); q.setAttribute('aria-expanded','true'); }
+  }
+  q.addEventListener('click', toggle);
+  q.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+  });
+});
+
+// Animated counters
+const counters = document.querySelectorAll('.trust-num');
+const counterIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el = e.target;
+      const target = parseInt(el.dataset.count);
+      let cur = 0;
+      const step = Math.max(1, Math.ceil(target/50));
+      const tick = ()=>{
+        cur = Math.min(target, cur+step);
+        el.textContent = cur.toLocaleString();
+        if(cur < target) requestAnimationFrame(tick);
+      };
+      tick();
+      counterIO.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+counters.forEach(c=>counterIO.observe(c));
+
+// Hero particles
+const pField = document.getElementById('hero-particles');
+for(let i=0;i<18;i++){
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random()*100+'%';
+  p.style.top = Math.random()*100+'%';
+  p.style.opacity = (0.2 + Math.random()*0.5).toFixed(2);
+  p.style.animation = `floaty ${8+Math.random()*10}s ease-in-out infinite`;
+  p.style.animationDelay = (Math.random()*5)+'s';
+  pField.appendChild(p);
+}
+const styleTag = document.createElement('style');
+styleTag.textContent = `@keyframes floaty{0%,100%{transform:translateY(0);} 50%{transform:translateY(-24px);}}`;
+document.head.appendChild(styleTag);
+
+// 3D spinning carousel — build cards around the ring, single rotation loop drives both auto-spin and drag
+const ring = document.getElementById('carousel-ring');
+if(ring){
+  const titles = [
+    {label:'EBOOK', title:'Mastering Credit'},
+    {label:'WORKBOOK', title:'Credit Dispute Toolkit'},
+    {label:'PLANNER', title:'Budget & Goals'},
+    {label:'TEMPLATE', title:'Command Center'},
+    {label:'EBOOK', title:'Reading Your Credit Report'},
+    {label:'EBOOK', title:'Wealth Tracker'},
+    {label:'EBOOK', title:'Saving on Autopilot'},
+    {label:'EBOOK', title:'Investing 101: The Basics'}
+  ];
+  const n = titles.length;
+  const radius = 320;
+  titles.forEach((t,i)=>{
+    const angle = (360/n)*i;
+    const card = document.createElement('div');
+    card.className = 'carousel-card';
+    card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+    card.innerHTML = `<div class="cc-spine"></div><div class="cc-label">${t.label}</div><div class="cc-title">${t.title}</div>`;
+    ring.appendChild(card);
+  });
+
+  const stage = ring.parentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let rotation = 0;
+  let isDragging = false;
+  let isHovering = false;
+  let lastX = 0;
+  let velocity = 0; // deg per frame, for momentum after release
+
+  function frame(){
+    if(isDragging){
+      // rotation updated directly in pointermove
+    } else if(Math.abs(velocity) > 0.02){
+      rotation += velocity;
+      velocity *= 0.95; // friction / momentum decay
+    } else if(!isHovering && !reduceMotion){
+      rotation += 0.08; // gentle auto-spin
+    }
+    ring.style.transform = `rotateY(${rotation}deg)`;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  stage.addEventListener('mouseenter', ()=>{ isHovering = true; });
+  stage.addEventListener('mouseleave', ()=>{ isHovering = false; });
+
+  stage.addEventListener('pointerdown', (e)=>{
+    isDragging = true;
+    velocity = 0;
+    lastX = e.clientX;
+    ring.classList.add('grabbing');
+    stage.setPointerCapture(e.pointerId);
+  });
+  stage.addEventListener('pointermove', (e)=>{
+    if(!isDragging) return;
+    const dx = e.clientX - lastX;
+    lastX = e.clientX;
+    rotation += dx * 0.5;
+    velocity = dx * 0.5; // carries into momentum on release
+  });
+  function endDrag(){
+    if(!isDragging) return;
+    isDragging = false;
+    ring.classList.remove('grabbing');
+  }
+  stage.addEventListener('pointerup', endDrag);
+  stage.addEventListener('pointercancel', endDrag);
+  stage.addEventListener('pointerleave', endDrag);
+}
+
+// Floating luxury cards — subtle cursor parallax, layered by depth
+const cards = document.querySelectorAll('.credit-card');
+document.getElementById('hero').addEventListener('mousemove', (e)=>{
+  const r = e.currentTarget.getBoundingClientRect();
+  const px = (e.clientX - r.left)/r.width - 0.5;
+  const py = (e.clientY - r.top)/r.height - 0.5;
+  cards.forEach((c,i)=>{
+    const depth = (i%2===0) ? 14 : 22;
+    c.style.setProperty('--r', (px*depth*0.4)+'deg');
+    c.style.marginLeft = (px*depth)+'px';
+    c.style.marginTop = (py*depth*0.6)+'px';
+  });
+});
+
+// Payment streak row (9 of 12 filled)
+const streakRow = document.getElementById('streak-row');
+if(streakRow){
+  for(let i=0;i<12;i++){
+    const s = document.createElement('span');
+    if(i<9) s.classList.add('filled');
+    streakRow.appendChild(s);
+  }
+}
+
+// Dashboard meter reveal
+const dashMeters = document.querySelectorAll('.dash-meter-fill');
+const dashIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.width = e.target.dataset.width + '%';
+      dashIO.unobserve(e.target);
+    }
+  });
+},{threshold:0.4});
+dashMeters.forEach(m=>dashIO.observe(m));
+
+// Ambient global particles (spans full document height)
+const ambientField = document.getElementById('ambient-field');
+function seedAmbientParticles(){
+  const docH = document.documentElement.scrollHeight;
+  for(let i=0;i<16;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 1.5 + Math.random()*2;
+    p.style.width = size+'px';
+    p.style.height = size+'px';
+    p.style.borderRadius = '50%';
+    p.style.left = Math.random()*100+'%';
+    p.style.top = (Math.random()*docH)+'px';
+    p.style.opacity = (0.08 + Math.random()*0.2).toFixed(2);
+    p.style.animation = `floaty ${10+Math.random()*14}s ease-in-out infinite`;
+    p.style.animationDelay = (Math.random()*6)+'s';
+    ambientField.appendChild(p);
+  }
+}
+window.addEventListener('load', seedAmbientParticles);
+
+// Magnetic buttons
+document.querySelectorAll('.magnetic').forEach(btn=>{
+  btn.addEventListener('mousemove', (e)=>{
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width/2;
+    const y = e.clientY - r.top - r.height/2;
+    btn.style.transform = `translate(${x*0.28}px, ${y*0.32}px)`;
+  });
+  btn.addEventListener('mouseleave', ()=>{ btn.style.transform = 'translate(0,0)'; });
+});
+
+// Custom cursor dot — grows over interactive elements
+const cursorDot = document.getElementById('cursor-dot');
+if(window.matchMedia('(min-width:901px)').matches){
+  window.addEventListener('mousemove', (e)=>{
+    cursorDot.style.left = e.clientX+'px';
+    cursorDot.style.top = e.clientY+'px';
+    cursorDot.classList.add('active');
+  });
+  document.querySelectorAll('a, button, .book-card, .shelf-item, .feature-head, .faq-q').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>cursorDot.classList.add('grow'));
+    el.addEventListener('mouseleave', ()=>cursorDot.classList.remove('grow'));
+  });
+}
+
+// Hero mouse-reactive parallax (arc + particles drift slightly toward cursor)
+const heroArc = document.querySelector('.hero-arc');
+document.getElementById('hero').addEventListener('mousemove', (e)=>{
+  const r = e.currentTarget.getBoundingClientRect();
+  const px = (e.clientX - r.left)/r.width - 0.5;
+  const py = (e.clientY - r.top)/r.height - 0.5;
+  heroArc.style.transform = `translateY(-50%) translate(${px*18}px, ${py*18}px)`;
+});
+
+// Lead magnet popup — exit-intent (desktop) + 20s fallback (once per session)
+const leadOverlay = document.getElementById('lead-overlay');
+let leadShown = sessionStorage.getItem('twb_lead_shown') === '1';
+function showLead(){
+  if(leadShown) return;
+  leadOverlay.classList.add('show');
+  leadShown = true;
+  sessionStorage.setItem('twb_lead_shown','1');
+}
+document.querySelector('.lead-close').addEventListener('click', ()=>leadOverlay.classList.remove('show'));
+leadOverlay.addEventListener('click', (e)=>{ if(e.target === leadOverlay) leadOverlay.classList.remove('show'); });
+document.querySelector('.lead-form').addEventListener('submit', ()=>{
+  leadOverlay.querySelector('.lead-modal').innerHTML = '<div class="eyebrow">Thank you</div><h3>Check your inbox.</h3><p>The guide is on its way — take a look at the full collection while you wait.</p>';
+});
+// Exit-intent: cursor leaves toward top of viewport
+document.addEventListener('mouseleave', (e)=>{ if(e.clientY < 8) showLead(); });
+// Fallback timer
+setTimeout(showLead, 20000);
+</script>
+</body>
+</html>
